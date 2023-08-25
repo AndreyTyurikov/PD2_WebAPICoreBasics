@@ -8,6 +8,7 @@ namespace WebApiCoreBasics.Models.DTO.Transaction
         public long userId { get; set; }
         [Required]
         public string details { get; set; }
+        [Required]
         public double amount { get; set; }
     }
 }
