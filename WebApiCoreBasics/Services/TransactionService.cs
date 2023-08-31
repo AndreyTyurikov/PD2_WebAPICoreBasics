@@ -7,10 +7,12 @@ namespace WebApiCoreBasics.Services
     public class TransactionService : ITransactionService
     {
         private readonly ITransactionIndexer _transactionIndexer;
+        private readonly ITransactionDataLayer _transactionDataLayer;
 
-        public TransactionService(ITransactionIndexer transactionIndexer)
+        public TransactionService(ITransactionIndexer transactionIndexer, ITransactionDataLayer transactionDataLayer)
         {
             _transactionIndexer = transactionIndexer;
+            _transactionDataLayer = transactionDataLayer;
         }
 
         public async Task<TransactionDTO> Add(AddTransactionDTO addTransactionDto)
@@ -22,14 +24,18 @@ namespace WebApiCoreBasics.Services
             return appliedTransaction.Adapt<TransactionDTO>();
         }
 
-        public Task<TransactionDTO> GetById(long id)
+        public async Task<TransactionDTO> GetById(long id)
         {
-            throw new NotImplementedException();
+            Transaction transactionByID = await _transactionDataLayer.GetByID(id);
+
+            return transactionByID.Adapt<TransactionDTO>();
         }
 
-        public Task<List<TransactionDTO>> GetByUserID(long id)
+        public async Task<List<TransactionDTO>> GetByUserID(long id)
         {
-            throw new NotImplementedException();
+            List<Transaction> transactionsByUser = await _transactionDataLayer.GetByUserID(id);
+
+            return transactionsByUser.Adapt<List<TransactionDTO>>();
         }
     }
 }

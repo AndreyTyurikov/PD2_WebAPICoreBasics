@@ -15,6 +15,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IPasswordService, PasswordService>();
 builder.Services.AddTransient<IUserDataLayer, UserDataLayer>();
 builder.Services.AddTransient<IAccountDataLayer, AccountDataLayer>();
+builder.Services.AddTransient<ITransactionDataLayer, TransactionDataLayer>();
 
 //Statefull, 1 instance per 1 HTTP request  -> Recommended lifetime: Scoped
 builder.Services.AddScoped<IUserService, UserService>();

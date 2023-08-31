@@ -55,7 +55,13 @@ namespace WebApiCoreBasics.Services
         {
             User userByID = await _userDataLayer.GetByID(id);
 
-            return userByID.Adapt<UserDTO>();
+            Account userAccount = await _accountService.GetByUser(userByID);
+
+            UserDTO userDTO = userByID.Adapt<UserDTO>();
+
+            if (userAccount != null) userDTO.balance = userAccount.balance;
+
+            return userDTO;
         }
 
         public async Task<bool> UpdateUserFromDTO(EditUserDTO editUserDTO)
